@@ -3,25 +3,50 @@ package dev.benedicte.dealerbeat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.lang.IllegalArgumentException
+import java.util.Random
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+
+import dev.benedicte.dealerbeat.Suit.*
 
 class BlackjackTest {
     @Test
     fun  `should be able to calculate score of hand`() {
-        assertEquals(0, listOf<Card>().calculateScore())
+        assertScore(0, listOf<Card>())
+        assertScore(5, listOf<Card>("5" of HEARTS))
+        assertScore(13, listOf<Card>("3" of CLUBS, "Q" of CLUBS))
+        assertScore(21, listOf<Card>("A" of SPADES, "Q" of HEARTS))
+        assertScore(22, listOf<Card>("A" of HEARTS, "A" of DIAMONDS))
+        assertScore(30, listOf<Card>("K" of DIAMONDS, "Q" of HEARTS, "J" of SPADES))
 
-        assertEquals(5, listOf<Card>(Card("5")).calculateScore())
-
-        assertEquals(13, listOf<Card>(Card("3"), Card("Q")).calculateScore())
-
-        assertEquals(21, listOf<Card>(Card("A"), Card("Q")).calculateScore())
-
-        assertEquals(22, listOf<Card>(Card("A"), Card("A")).calculateScore())
-
-        assertEquals(30, listOf<Card>(Card("K"),
-            Card("Q"),
-            Card("J")).calculateScore())
-
-        assertThrows<IllegalArgumentException> { Card("I") }
+        assertThrows<IllegalArgumentException> { "I" of DIAMONDS }
     }
+
+    @Test
+    fun  `deck of cards should be unique and contain 52`() {
+        // Verify that distinct() can distinguish between suits and values
+        assertOnlyDistinct(listOf("2" of HEARTS, "2" of SPADES))
+        assertContainsDuplicates(listOf("A" of HEARTS, "A" of HEARTS))
+        assertOnlyDistinct(listOf("3" of HEARTS, "4" of HEARTS))
+
+        val deck = drawDeck()
+
+        // Verify length of deck
+        assertEquals(52, deck.size)
+
+        // Verify that the deck only has unique cards
+        assertOnlyDistinct(deck)
+    }
+
+    @Test
+    fun  `deck of cards should be shuffled`() {
+        assertEquals(drawDeckWithSeed(1), drawDeckWithSeed(1))
+        assertNotEquals(drawDeckWithSeed(1), drawDeckWithSeed(2))
+    }
+
+    private fun drawDeckWithSeed(seed: Long) = drawDeck(Random(seed))
+
+    private fun assertOnlyDistinct(deck: List<Card>) = assertEquals(deck.size, deck.distinct().size)
+    private fun assertContainsDuplicates(deck: List<Card>) = assertNotEquals(deck.size, deck.distinct().size)
+    private fun assertScore(score: Int, hand: Hand) = assertEquals(score, hand.calculateScore())
 }
