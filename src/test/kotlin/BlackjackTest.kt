@@ -48,5 +48,5 @@ class BlackjackTest {
 
     private fun assertOnlyDistinct(deck: List<Card>) = assertEquals(deck.size, deck.distinct().size)
     private fun assertContainsDuplicates(deck: List<Card>) = assertNotEquals(deck.size, deck.distinct().size)
-    private fun assertScore(score: Int, hand: Hand) = assertEquals(score, hand.calculateScore())
+    private fun assertScore(score: Int, hand: Hand) = assertEquals(score, hand.score())
 }

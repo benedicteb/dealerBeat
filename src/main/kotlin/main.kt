@@ -19,7 +19,7 @@ data class Card(val suit: Suit, val value: String) {
 infix fun String.of(suit: Suit) = Card(suit, this)
 
 typealias Hand = List<Card>
-fun Hand.calculateScore() = this.sumBy { it.score }
+fun Hand.score() = this.sumBy { it.score }
 
 fun drawDeck(random: Random = Random()) = Suit.values().flatMap { suit ->
     listOf("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A").map { value ->
