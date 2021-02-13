@@ -6,6 +6,8 @@ import java.lang.IllegalArgumentException
 import java.util.Random
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 import dev.benedicte.dealerbeat.Suit.*
 
@@ -53,8 +55,26 @@ class BlackjackTest {
         assertEquals(listOf("5" of DIAMONDS, "Q" of HEARTS, "8" of SPADES), result.dealer)
     }
 
+    @Test
+    fun  `if both players start with blackjack sam should win`() {
+        val deck = Deck(listOf("A" of CLUBS, "A" of DIAMONDS, "Q" of HEARTS, "Q" of SPADES))
+        val result = Blackjack.play(deck)
+
+        assertSamWon(result)
+    }
+
+    @Test
+    fun  `if both players start with 22 dealer should win`() {
+        val deck = Deck(listOf("A" of CLUBS, "A" of DIAMONDS, "A" of HEARTS, "A" of SPADES))
+        val result = Blackjack.play(deck)
+
+        assertDealerWon(result)
+    }
+
     private fun drawDeckWithSeed(seed: Long) = Deck.generateShuffled(Random(seed))
 
+    private fun assertSamWon(result: GameResult) = assertTrue(result.samWon)
+    private fun assertDealerWon(result: GameResult) = assertFalse(result.samWon)
     private fun assertOnlyDistinct(deck: List<Card>) = assertEquals(deck.size, deck.distinct().size)
     private fun assertContainsDuplicates(deck: List<Card>) = assertNotEquals(deck.size, deck.distinct().size)
     private fun assertScore(score: Int, hand: Hand) = assertEquals(score, hand.score())
