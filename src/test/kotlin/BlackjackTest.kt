@@ -71,6 +71,14 @@ class BlackjackTest {
         assertDealerWon(result)
     }
 
+    @Test
+    fun  `if sam starts with 22 dealer should win`() {
+        val deck = Deck(listOf("A" of CLUBS, "3" of DIAMONDS, "A" of HEARTS, "4" of SPADES))
+        val result = Blackjack.play(deck)
+
+        assertDealerWon(result)
+    }
+
     private fun drawDeckWithSeed(seed: Long) = Deck.generateShuffled(Random(seed))
 
     private fun assertSamWon(result: GameResult) = assertTrue(result.samWon)

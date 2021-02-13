@@ -26,16 +26,6 @@ object Blackjack {
         sam = sam drawsFrom deck
         dealer = dealer drawsFrom deck
 
-        if (sam.hasBlackjack()) {
-            return GameResult(sam, dealer, true)
-        } else if (dealer.hasBlackjack()) {
-            return GameResult(sam, dealer, false)
-        }
-
-        if (sam.score() > 21 && dealer.score() > 21) {
-            return GameResult(sam, dealer, false)
-        }
-
         while (sam.score() < 17) {
             sam = sam drawsFrom deck
         }
@@ -44,11 +34,19 @@ object Blackjack {
             return GameResult(sam, dealer, false)
         }
 
-        while (dealer.score() <= sam.score()) {
+        if (sam.hasBlackjack()) {
+            return GameResult(sam, dealer, true)
+        }
+
+        while (dealer.score() < sam.score()) {
             dealer = dealer drawsFrom deck
         }
 
         if (dealer.score() > 21) {
+            return GameResult(sam, dealer, false)
+        }
+
+        if (dealer.hasBlackjack()) {
             return GameResult(sam, dealer, false)
         }
 
