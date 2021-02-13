@@ -29,13 +29,13 @@ class BlackjackTest {
         assertContainsDuplicates(listOf("A" of HEARTS, "A" of HEARTS))
         assertOnlyDistinct(listOf("3" of HEARTS, "4" of HEARTS))
 
-        val deck = drawDeck()
+        val deck = Deck.generateShuffled()
 
         // Verify length of deck
-        assertEquals(52, deck.size)
+        assertEquals(52, deck.size())
 
         // Verify that the deck only has unique cards
-        assertOnlyDistinct(deck)
+        assertOnlyDistinct(deck.cards)
     }
 
     @Test
@@ -44,7 +44,16 @@ class BlackjackTest {
         assertNotEquals(drawDeckWithSeed(1), drawDeckWithSeed(2))
     }
 
-    private fun drawDeckWithSeed(seed: Long) = drawDeck(Random(seed))
+    @Test
+    fun  `playing a game with a given deck should produce given outcome`() {
+        val deck = Deck(listOf("A" of CLUBS, "5" of DIAMONDS, "9" of HEARTS, "Q" of HEARTS, "8" of SPADES))
+        val result = Blackjack.play(deck)
+
+        assertEquals(listOf("A" of CLUBS, "9" of HEARTS), result.sam)
+        assertEquals(listOf("5" of DIAMONDS, "Q" of HEARTS, "8" of SPADES), result.dealer)
+    }
+
+    private fun drawDeckWithSeed(seed: Long) = Deck.generateShuffled(Random(seed))
 
     private fun assertOnlyDistinct(deck: List<Card>) = assertEquals(deck.size, deck.distinct().size)
     private fun assertContainsDuplicates(deck: List<Card>) = assertNotEquals(deck.size, deck.distinct().size)

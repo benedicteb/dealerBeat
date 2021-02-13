@@ -16,14 +16,70 @@ data class Card(val suit: Suit, val value: String) {
     }
 }
 
+data class GameResult(val sam: Hand, val dealer: Hand, val samWon: Boolean)
+
+object Blackjack {
+    fun play(deck: Deck): GameResult {
+        var sam: Hand = listOf(deck.drawCard())
+        var dealer: Hand = listOf(deck.drawCard())
+
+        sam = sam drawsFrom deck
+        dealer = dealer drawsFrom deck
+
+        if (sam.hasBlackjack()) {
+            return GameResult(sam, dealer, true)
+        } else if (dealer.hasBlackjack()) {
+            return GameResult(sam, dealer, false)
+        }
+
+        if (sam.score() > 21 && dealer.score() > 21) {
+            return GameResult(sam, dealer, false)
+        }
+
+        while (sam.score() < 17) {
+            sam = sam drawsFrom deck
+        }
+
+        if (sam.score() > 21) {
+            return GameResult(sam, dealer, false)
+        }
+
+        while (dealer.score() <= sam.score()) {
+            dealer = dealer drawsFrom deck
+        }
+
+        if (dealer.score() > 21) {
+            return GameResult(sam, dealer, false)
+        }
+
+        return GameResult(sam, dealer, sam.score() > dealer.score())
+    }
+}
+
 infix fun String.of(suit: Suit) = Card(suit, this)
 
 typealias Hand = List<Card>
 fun Hand.score() = this.sumBy { it.score }
+fun Hand.hasBlackjack() = this.score() == 21
+infix fun Hand.drawsFrom(deck: Deck) = listOf(this, listOf(deck.drawCard())).flatten()
 
-fun drawDeck(random: Random = Random()) = Suit.values().flatMap { suit ->
-    listOf("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A").map { value ->
-        Card(suit, value) } }.shuffled(random)
+data class Deck(var cards: List<Card>) {
+    companion object {
+        fun generateShuffled(random: Random = Random()): Deck = Deck(Suit.values().flatMap { suit ->
+            listOf("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A").map { value ->
+                Card(suit, value) } }.shuffled(random))
+    }
+
+    fun drawCard(): Card {
+        val card = cards.first()
+
+        this.cards = cards.subList(1, cards.size)
+
+        return card
+    }
+
+    fun size() = this.cards.size
+}
 
 fun main() {
     println("Hello World!")
