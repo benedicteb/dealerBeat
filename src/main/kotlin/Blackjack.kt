@@ -4,8 +4,11 @@ data class GameResult(val sam: Hand, val dealer: Hand, val samWon: Boolean)
 
 object Blackjack {
     fun play(deck: Deck): GameResult {
-        var sam: Hand = listOf(deck.drawCard())
-        var dealer: Hand = listOf(deck.drawCard())
+        var sam: Hand = listOf()
+        var dealer: Hand = listOf()
+
+        sam = sam drawsFrom deck
+        dealer = dealer drawsFrom deck
 
         sam = sam drawsFrom deck
         dealer = dealer drawsFrom deck
