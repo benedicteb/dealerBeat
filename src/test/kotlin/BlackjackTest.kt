@@ -13,15 +13,37 @@ import dev.benedicte.dealerbeat.Suit.*
 
 class BlackjackTest {
     @Test
-    fun  `should be able to calculate score of hand`() {
-        assertScore(0, listOf<Card>())
-        assertScore(5, listOf<Card>("5" of HEARTS))
-        assertScore(13, listOf<Card>("3" of CLUBS, "Q" of CLUBS))
-        assertScore(21, listOf<Card>("A" of SPADES, "Q" of HEARTS))
-        assertScore(22, listOf<Card>("A" of HEARTS, "A" of DIAMONDS))
-        assertScore(30, listOf<Card>("K" of DIAMONDS, "Q" of HEARTS, "J" of SPADES))
-
+    fun  `creating cards with invalid value should throw IllegalArgumentException`() {
         assertThrows<IllegalArgumentException> { "I" of DIAMONDS }
+        assertThrows<IllegalArgumentException> { "11" of DIAMONDS }
+    }
+
+    @Test
+    fun  `parsing cards from strings should throw IllegalArgumentException if invalid`() {
+        assertThrows<IllegalArgumentException> { Deck.fromString("I2") }
+        assertThrows<IllegalArgumentException> { Deck.fromString("C11") }
+    }
+
+    @Test
+    fun  `parsing cards from string produce the right cards`() {
+        assertEqualsDeckWith(listOf(), Deck.fromString(""))
+        assertEqualsDeckWith(listOf("A" of SPADES), Deck.fromString("SA"))
+        assertEqualsDeckWith(listOf("A" of SPADES, "9" of HEARTS), Deck.fromString("SA, H9"))
+    }
+
+    @Test
+    fun  `should be able to calculate score of hand`() {
+        assertScore(0, listOf())
+        assertScore(5, listOf("5" of HEARTS))
+        assertScore(13, listOf("3" of CLUBS, "Q" of CLUBS))
+        assertScore(21, listOf("A" of SPADES, "Q" of HEARTS))
+        assertScore(22, listOf("A" of HEARTS, "A" of DIAMONDS))
+        assertScore(30, listOf("K" of DIAMONDS, "Q" of HEARTS, "J" of SPADES))
+    }
+
+    @Test
+    fun  `drawing cards from an empty deck should throw OutOfCardsException`() {
+        assertThrows<OutOfCardsException> { Deck(listOf()).drawCard() }
     }
 
     @Test
@@ -129,6 +151,7 @@ class BlackjackTest {
 
     private fun drawDeckWithSeed(seed: Long) = Deck.generateShuffled(Random(seed))
 
+    private fun assertEqualsDeckWith(cards: List<Card>, deck: Deck) = assertEquals(cards, deck.cards)
     private fun assertSamWon(result: GameResult) = assertTrue(result.samWon)
     private fun assertDealerWon(result: GameResult) = assertFalse(result.samWon)
     private fun assertOnlyDistinct(deck: List<Card>) = assertEquals(deck.size, deck.distinct().size)
