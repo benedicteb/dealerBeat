@@ -38,7 +38,7 @@ object Blackjack {
             return GameResult(sam, dealer, true)
         }
 
-        while (dealer.score() < sam.score()) {
+        while (dealer.score() <= sam.score()) {
             dealer = dealer drawsFrom deck
         }
 
