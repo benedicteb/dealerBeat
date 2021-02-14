@@ -43,7 +43,7 @@ object Blackjack {
         }
 
         if (dealer.score() > 21) {
-            return GameResult(sam, dealer, false)
+            return GameResult(sam, dealer, true)
         }
 
         if (dealer.hasBlackjack()) {

@@ -51,8 +51,16 @@ class BlackjackTest {
         val deck = Deck(listOf("A" of CLUBS, "5" of DIAMONDS, "9" of HEARTS, "Q" of HEARTS, "8" of SPADES))
         val result = Blackjack.play(deck)
 
-        assertEquals(listOf("A" of CLUBS, "9" of HEARTS), result.sam)
-        assertEquals(listOf("5" of DIAMONDS, "Q" of HEARTS, "8" of SPADES), result.dealer)
+        assertSamWon(result)
+    }
+
+    @Test
+    fun  `given a deck sam should be given first and third card and dealer second and fourth`() {
+        val deck = Deck(listOf("A" of CLUBS, "A" of DIAMONDS, "Q" of HEARTS, "Q" of SPADES))
+        val result = Blackjack.play(deck)
+
+        assertEquals(listOf("A" of CLUBS, "Q" of HEARTS), result.sam)
+        assertEquals(listOf("A" of DIAMONDS, "Q" of SPADES), result.dealer)
     }
 
     @Test
