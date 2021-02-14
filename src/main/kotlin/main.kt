@@ -3,8 +3,8 @@ package dev.benedicte.dealerbeat
 import java.lang.Integer.parseInt
 import java.util.Random
 
-enum class Suit() {
-    CLUBS, HEARTS, DIAMONDS, SPADES,
+enum class Suit(val asString: String) {
+    CLUBS("C"), HEARTS("H"), DIAMONDS("D"), SPADES("S"),
 }
 
 data class Card(val suit: Suit, val value: String) {
@@ -14,6 +14,8 @@ data class Card(val suit: Suit, val value: String) {
         "2", "3", "4", "5", "6", "7", "8", "9", "10" -> parseInt(value)
         else -> throw IllegalArgumentException("Invalid card value")
     }
+
+    override fun toString() = "${suit.asString}$value"
 }
 infix fun String.of(suit: Suit) = Card(suit, this)
 
@@ -79,5 +81,7 @@ data class Deck(var cards: List<Card>) {
 }
 
 fun main() {
-    println("Hello World!")
+    val deck = Deck.generateShuffled()
+
+    println(deck.cards.map { it.toString() }.joinToString(","))
 }
