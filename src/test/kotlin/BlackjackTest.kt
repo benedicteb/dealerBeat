@@ -83,6 +83,22 @@ class BlackjackTest {
         assertScore(28, result.dealer)
     }
 
+    @Test
+    fun `dealer wins if they have the highest score at the end of the game`() {
+        val deck = Deck(
+            listOf(
+                "10" of CLUBS, "10" of DIAMONDS, "5" of HEARTS, "5" of SPADES, "2" of SPADES,
+                "2" of HEARTS, "2" of SPADES
+            )
+        )
+        val result = Blackjack.play(deck)
+
+        assertScore(17, result.sam)
+        assertScore(19, result.dealer)
+
+        assertDealerWon(result)
+    }
+
 }
 
 fun assertSamWon(result: GameResult) = assertTrue(result.samWon, "sam did not win")
