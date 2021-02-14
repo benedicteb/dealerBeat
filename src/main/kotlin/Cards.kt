@@ -27,4 +27,3 @@ fun Hand.score() = this.sumBy { it.score }
 fun Hand.hasBlackjack() = this.score() == 21
 fun Hand.mapToString() = this.joinToString(", ") { it.toString() }
 infix fun Hand.drawsFrom(deck: Deck) = listOf(this, listOf(deck.drawCard())).flatten()
-
