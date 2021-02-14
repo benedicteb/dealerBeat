@@ -25,18 +25,29 @@ class BlackjackTest {
     }
 
     @Test
-    fun  `deck of cards should be unique and contain 52`() {
-        // Verify that distinct() can distinguish between suits and values
+    fun  `lists of the same cards with same order should be equal`() {
+        assertEquals(listOf("A" of SPADES, "Q" of HEARTS),
+            listOf("A" of SPADES, "Q" of HEARTS))
+
+        assertNotEquals(listOf("Q" of HEARTS, "A" of SPADES),
+            listOf("A" of SPADES, "Q" of HEARTS))
+
+        assertNotEquals(listOf("A" of CLUBS, "Q" of HEARTS),
+            listOf("A" of SPADES, "Q" of HEARTS))
+    }
+
+    @Test
+    fun  `distinct should distinguish between suits and values`() {
         assertOnlyDistinct(listOf("2" of HEARTS, "2" of SPADES))
         assertContainsDuplicates(listOf("A" of HEARTS, "A" of HEARTS))
         assertOnlyDistinct(listOf("3" of HEARTS, "4" of HEARTS))
+    }
 
+    @Test
+    fun  `deck of cards should only contain 52 unique cards`() {
         val deck = Deck.generateShuffled()
 
-        // Verify length of deck
         assertEquals(52, deck.size())
-
-        // Verify that the deck only has unique cards
         assertOnlyDistinct(deck.cards)
     }
 
