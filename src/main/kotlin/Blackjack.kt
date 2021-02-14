@@ -1,5 +1,3 @@
-package dev.benedicte.dealerbeat
-
 data class GameResult(val sam: Hand, val dealer: Hand, val samWon: Boolean)
 
 object Blackjack {

@@ -27,5 +27,5 @@ tasks.withType<KotlinCompile>() {
 }
 
 application {
-    mainClassName = "dev.benedicte.dealerbeat.MainKt"
+    mainClassName = "MainKt"
 }

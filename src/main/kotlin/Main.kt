@@ -1,5 +1,3 @@
-package dev.benedicte.dealerbeat
-
 import java.io.FileNotFoundException
 import kotlin.system.exitProcess
 

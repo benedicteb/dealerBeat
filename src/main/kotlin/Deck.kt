@@ -1,5 +1,3 @@
-package dev.benedicte.dealerbeat
-
 import java.io.File
 import java.util.*
 
@@ -7,7 +5,9 @@ data class Deck(var cards: List<Card>) {
     companion object {
         fun generateShuffled(random: Random = Random()): Deck = Deck(Suit.values().flatMap { suit ->
             listOf("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A").map { value ->
-                Card(suit, value) } }.shuffled(random))
+                Card(suit, value)
+            }
+        }.shuffled(random))
 
         fun fromFile(path: String): Deck {
             return fromString(File(path).readText())

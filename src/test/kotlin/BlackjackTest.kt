@@ -1,11 +1,8 @@
-package dev.benedicte.dealerbeat
-
+import Suit.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-
-import dev.benedicte.dealerbeat.Suit.*
 
 class BlackjackTest {
     @Test
@@ -51,8 +48,12 @@ class BlackjackTest {
 
     @Test
     fun `sam should stop drawing cards when score reaches 17 and dealer when higher score than sam`() {
-        val deck = Deck(listOf("10" of CLUBS, "K" of DIAMONDS, "5" of HEARTS, "5" of SPADES, "2" of SPADES,
-            "2" of HEARTS, "2" of CLUBS))
+        val deck = Deck(
+            listOf(
+                "10" of CLUBS, "K" of DIAMONDS, "5" of HEARTS, "5" of SPADES, "2" of SPADES,
+                "2" of HEARTS, "2" of CLUBS
+            )
+        )
         val result = Blackjack.play(deck)
 
         assertScore(17, result.sam)
@@ -70,8 +71,12 @@ class BlackjackTest {
 
     @Test
     fun `dealer loses if they draw a score higher than 21`() {
-        val deck = Deck(listOf("10" of CLUBS, "K" of DIAMONDS, "5" of HEARTS, "5" of SPADES, "2" of SPADES,
-            "2" of HEARTS, "A" of SPADES))
+        val deck = Deck(
+            listOf(
+                "10" of CLUBS, "K" of DIAMONDS, "5" of HEARTS, "5" of SPADES, "2" of SPADES,
+                "2" of HEARTS, "A" of SPADES
+            )
+        )
         val result = Blackjack.play(deck)
 
         assertSamWon(result)

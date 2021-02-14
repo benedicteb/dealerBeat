@@ -1,12 +1,8 @@
-package dev.benedicte.dealerbeat
-
+import Suit.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
-
-import dev.benedicte.dealerbeat.Suit.*
 
 class CardsTest {
     @Test
@@ -27,14 +23,20 @@ class CardsTest {
 
     @Test
     fun `lists of the same cards with same order should be equal`() {
-        assertEquals(listOf("A" of SPADES, "Q" of HEARTS),
-            listOf("A" of SPADES, "Q" of HEARTS))
+        assertEquals(
+            listOf("A" of SPADES, "Q" of HEARTS),
+            listOf("A" of SPADES, "Q" of HEARTS)
+        )
 
-        assertNotEquals(listOf("Q" of HEARTS, "A" of SPADES),
-            listOf("A" of SPADES, "Q" of HEARTS))
+        assertNotEquals(
+            listOf("Q" of HEARTS, "A" of SPADES),
+            listOf("A" of SPADES, "Q" of HEARTS)
+        )
 
-        assertNotEquals(listOf("A" of CLUBS, "Q" of HEARTS),
-            listOf("A" of SPADES, "Q" of HEARTS))
+        assertNotEquals(
+            listOf("A" of CLUBS, "Q" of HEARTS),
+            listOf("A" of SPADES, "Q" of HEARTS)
+        )
     }
 
     @Test

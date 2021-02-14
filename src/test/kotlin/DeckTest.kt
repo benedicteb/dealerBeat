@@ -1,13 +1,10 @@
-package dev.benedicte.dealerbeat
-
+import Suit.HEARTS
+import Suit.SPADES
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
+import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
-import java.util.*
-
-import dev.benedicte.dealerbeat.Suit.*
 
 class DeckTest {
     @Test

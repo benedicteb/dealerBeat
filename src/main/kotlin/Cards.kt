@@ -1,5 +1,3 @@
-package dev.benedicte.dealerbeat
-
 enum class Suit(val asString: String) {
     CLUBS("C"),
     HEARTS("H"),
@@ -24,6 +22,7 @@ data class Card(val suit: Suit, val value: String) {
 }
 
 typealias Hand = List<Card>
+
 fun Hand.score() = this.sumBy { it.score }
 fun Hand.hasBlackjack() = this.score() == 21
 fun Hand.mapToString() = this.joinToString(", ") { it.toString() }
