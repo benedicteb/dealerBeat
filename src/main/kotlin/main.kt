@@ -15,6 +15,7 @@ data class Card(val suit: Suit, val value: String) {
         else -> throw IllegalArgumentException("Invalid card value")
     }
 }
+infix fun String.of(suit: Suit) = Card(suit, this)
 
 data class GameResult(val sam: Hand, val dealer: Hand, val samWon: Boolean)
 
@@ -53,8 +54,6 @@ object Blackjack {
         return GameResult(sam, dealer, sam.score() > dealer.score())
     }
 }
-
-infix fun String.of(suit: Suit) = Card(suit, this)
 
 typealias Hand = List<Card>
 fun Hand.score() = this.sumBy { it.score }
