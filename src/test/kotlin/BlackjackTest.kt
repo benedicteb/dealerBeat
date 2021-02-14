@@ -108,6 +108,25 @@ class BlackjackTest {
         assertScore(19, result.dealer)
     }
 
+    @Test
+    fun  `sam loses if he draws a score higher than 21`() {
+        val deck = Deck(listOf("10" of CLUBS, "K" of DIAMONDS, "5" of HEARTS, "5" of SPADES, "K" of SPADES))
+        val result = Blackjack.play(deck)
+
+        assertDealerWon(result)
+        assertScore(25, result.sam)
+    }
+
+    @Test
+    fun  `dealer loses if they draw a score higher than 21`() {
+        val deck = Deck(listOf("10" of CLUBS, "K" of DIAMONDS, "5" of HEARTS, "5" of SPADES, "2" of SPADES,
+            "2" of HEARTS, "A" of SPADES))
+        val result = Blackjack.play(deck)
+
+        assertSamWon(result)
+        assertScore(28, result.dealer)
+    }
+
     private fun drawDeckWithSeed(seed: Long) = Deck.generateShuffled(Random(seed))
 
     private fun assertSamWon(result: GameResult) = assertTrue(result.samWon)
