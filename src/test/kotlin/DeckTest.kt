@@ -30,7 +30,7 @@ class DeckTest {
     }
 
     @Test
-    fun `deck of cards should only contain 52 unique cards`() {
+    fun `newly generated deck of cards should only contain 52 unique cards`() {
         val deck = Deck.generateShuffled()
 
         assertEquals(52, deck.size())
