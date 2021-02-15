@@ -51,7 +51,7 @@ class BlackjackTest {
         val deck = Deck(
             listOf(
                 "10" of CLUBS, "K" of DIAMONDS, "5" of HEARTS, "5" of SPADES, "2" of SPADES,
-                "2" of HEARTS, "2" of CLUBS
+                "2" of HEARTS, "2" of CLUBS, "2" of DIAMONDS, "6" of CLUBS
             )
         )
         val result = Blackjack.play(deck)
