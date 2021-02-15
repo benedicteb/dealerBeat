@@ -14,7 +14,7 @@ data class Deck(var cards: List<Card>) {
         }
 
         fun fromString(cardsString: String): Deck {
-            return Deck(cardsString.split(", ").filter { it.isNotEmpty() }.map { it.trim() }.map {
+            return Deck(cardsString.trim().split(",").filter { it.isNotEmpty() }.map { it.trim() }.map {
                 /*
                  * it.drop(1) returns the string excluding the first character
                  * it.take(1) returns the first character of the string

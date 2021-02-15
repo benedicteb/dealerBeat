@@ -1,5 +1,4 @@
-import Suit.HEARTS
-import Suit.SPADES
+import Suit.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.util.*
@@ -18,6 +17,11 @@ class DeckTest {
         assertEqualsDeckWith(listOf(), Deck.fromString(""))
         assertEqualsDeckWith(listOf("A" of SPADES), Deck.fromString("SA"))
         assertEqualsDeckWith(listOf("A" of SPADES, "9" of HEARTS), Deck.fromString("SA, H9"))
+        assertEqualsDeckWith(listOf("A" of SPADES, "9" of HEARTS, "10" of CLUBS), Deck.fromString("SA, H9, C10"))
+        assertEqualsDeckWith(listOf("A" of SPADES, "9" of HEARTS), Deck.fromString("SA,H9,"))
+        assertEqualsDeckWith(listOf("A" of SPADES, "9" of HEARTS), Deck.fromString(",SA,H9,"))
+        assertEqualsDeckWith(listOf("A" of SPADES, "9" of HEARTS), Deck.fromString(",SA  ,H9,,,"))
+        assertEqualsDeckWith(listOf("A" of SPADES, "9" of HEARTS, "10" of CLUBS), Deck.fromString(",SA  ,H9,,C10    ,"))
     }
 
     @Test
