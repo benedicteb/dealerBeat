@@ -12,7 +12,13 @@ Simulate a game with the example deck of cards in `exampleDeck.txt` by running:
 $ ./gradlew run --args="exampleDeck.txt"
 ```
 
-It should produce this output:
+Or omit the filename and let the program generate a shuffled deck for you.
+
+```shell
+$ ./gradlew run
+```
+
+With the example deck the following output should be produced:
 
 ```shell
 $ ./gradlew run --args="exampleDeck.txt"
